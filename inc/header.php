@@ -8,17 +8,18 @@
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/app.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 <body>
     <div class="navbar-fixed">
-  <nav class="light-blue lighten-1" role="navigation">
+  <nav class="teal lighten-1" role="navigation">
     <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo center">TC Standard - Inscription</a>
      <ul id="nav-mobile" class="left hide-on-med-and-down">
-        <li><a href="sass.html">Sass</a></li>
+        <li><a href="#">admin</a></li>
       </ul>
       <ul class="right hide-on-med-and-down">
-        <li><a href="mobile.html"><i class="material-icons">power_settings_new</i></a></li>
+        <li><a href="#">S'inscrire</a></li>
+        <li><a href="#">se coonecter</a></li>
       </ul>
 
       <ul id="nav-mobile" class="side-nav">
@@ -29,5 +30,15 @@
   </nav>
     </div>
     <div class="container">
+        
+        <?php if(isset($_SESSION['flash'])): ?>
+            <?php foreach ($_SESSION['flash'] as $type => $message): ?>
+                <div class="card-panel alert-<?=$type;?> lighten-4">
+                    <?=$message;?>
+                </div>
+            <?php endforeach; ?>
+            <?php unset($_SESSION['flash']); ?>
+        <?php endif; ?>
+
 
 
