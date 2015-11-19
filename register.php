@@ -74,7 +74,9 @@ if(!empty($_POST)){
                 . "affiliation = ?, "
                 . "email = ?, "
                 . "cotisation = ?, "
-                . "password = ? ");
+                . "password = ? ,"
+                . "inscription_at = NOW() ");
+
         $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
         $req->execute([
             $_POST['username'], 
@@ -92,8 +94,12 @@ if(!empty($_POST)){
             $password]);
         $user_id = $pdo->lastInsertId();
         //mail($_POST['email'], 'Confirmation de votre compte', "Afin de valider votre compte merci de cliquer sur ce lien\n\nhttp://localhost/coupe_davis_2016/confirm.php?id={$user_id}&token=$token");
-        $_SESSION['flash']['green'] = "Un e-mail de confirmation avec les  vous a été envoyé";
-        header('location: login.php');
+        $_SESSION['flash']['green'] = "Un e-mail avec les modalités de paiement vous a été envoyé";
+        $req = $pdo->prepare("SELECT * FROM membres WHERE id =? ");
+        $req->execute([$user_id]);
+        $user = $req->fetch();   
+        $_SESSION['auth'] = $user;
+        header('location: interclubs.php');
         exit();
 
     }

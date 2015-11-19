@@ -18,8 +18,13 @@
         <li><a href="#">admin</a></li>
       </ul>
       <ul class="right hide-on-med-and-down">
-        <li><a href="#">S'inscrire</a></li>
-        <li><a href="#">se connecter</a></li>
+        <?php if(isset($_SESSION['auth'])):?>
+            <li><a class="page-scroll" href="account.php">Mon compte</a></li>
+            <li><a class="page-scroll" href="logout.php">Se déconnecter</a></li>
+        <?php else: ?>
+            <li><a class="page-scroll" href="register.php">S'inscrire</a></li>
+            <li><a class="page-scroll" href="login.php">Se connecter</a></li>
+        <?php endif; ?>
       </ul>
 
       <ul id="nav-mobile" class="side-nav">
@@ -33,7 +38,7 @@
         
         <?php if(isset($_SESSION['flash'])): ?>
             <?php foreach ($_SESSION['flash'] as $type => $message): ?>
-                <div class="card-panel alert-<?=$type;?> lighten-4">
+                <div class="card-panel <?=$type;?> lighten-4">
                     <?=$message;?>
                 </div>
             <?php endforeach; ?>

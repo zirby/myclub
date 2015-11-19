@@ -21,3 +21,6 @@
 .icon-block .material-icons {
 	font-size: inherit;
 }
+td, th {
+    padding: 5px;
+}

@@ -2,18 +2,20 @@
 <?php 
 session_start();
 
-if(!empty($_POST) && !empty($_POST['email']) && !empty($_POST['password'])){
+if(!empty($_POST) && !empty($_POST['ident']) && !empty($_POST['password'])){
     require 'inc/db.php';
-    $req = $pdo->prepare("SELECT * FROM membres WHERE email = ?");
-    $req->execute([$_POST['email']]);
+    $req = $pdo->prepare("SELECT * FROM membres WHERE  username= ?");
+    $req->execute([$_POST['ident']]);
     $user = $req->fetch();
+    //var_dump($user);
+    //die();
     if($user && password_verify($_POST['password'], $user->password)){
         $_SESSION['auth'] = $user;
         $_SESSION['flash']['green']="Vous êtes bien connecté";
         header('Location: account.php');
         exit();
     }else{
-        $_SESSION['flash']['red']="Email ou mot de passe incorrect";
+        $_SESSION['flash']['red']="Identifiant, Email ou mot de passe incorrect";
     }
 }
 ?>
@@ -31,9 +33,9 @@ if(!empty($_POST) && !empty($_POST['email']) && !empty($_POST['password'])){
         </div>
     <?php endif; ?>
     <div class="form-group">
-      <label for="email" class="col-lg-2 control-label">Email</label>
+      <label for="ident" class="col-lg-2 control-label">Identifiant ou Email</label>
       <div class="col-lg-10">
-        <input class="form-control" name="email" id="email" placeholder="Email" type="text">
+        <input class="form-control" name="ident" id="ident" placeholder="Identifiant ou Email" type="text">
       </div>
     </div>
     <div class="form-group">
