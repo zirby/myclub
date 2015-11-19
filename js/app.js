@@ -1,7 +1,10 @@
-(function($){
-  $(function(){
+$(document).ready(function() {
+    
+    $('#cotisation').material_select();
+    $('#classement').material_select();
+  
 
-    $('.button-collapse').sideNav();
 
-  }); // end of document ready
-})(jQuery); // end of jQuery name space
+
+});
+        

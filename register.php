@@ -2,15 +2,49 @@
 
 <?php 
 require_once 'inc/function.php';
+require_once 'inc/db.php';
 session_start();
+
+$req = $pdo->prepare("SELECT * FROM classements ORDER BY points ");
+$req->execute();
+$classements = $req->fetchAll();
+//print_r($classements);
+//die();
+$req = $pdo->prepare("SELECT * FROM inscriptions ");
+$req->execute();
+$inscriptions = $req->fetchAll();
+//print_r($inscriptions);
+//die();
+
+
 if(!empty($_POST)){
     
     $errors = array();
-    require_once 'inc/db.php';
+    
     
     if(empty($_POST['username'])){
         $errors['username']="Entrez votre identifiant";
     }
+    if(empty($_POST['firstname'])){
+        $errors['firstname']="Entrez votre prénom";
+    }
+    if(empty($_POST['lastname'])){
+        $errors['lastname']="Entrez votre nom";
+    }
+    if(empty($_POST['address'])){
+        $errors['address']="Entrez votre adresse";
+    }
+    if(empty($_POST['code'])){
+        $errors['code']="Entrez votre code postal";
+    }
+    if(empty($_POST['localite'])){
+        $errors['localité']="Entrez votre localité";
+    }
+    if(empty($_POST['birthday'])){
+        $errors['birthday']="Entrez votre date de naissance";
+    }
+
+
     if(empty($_POST['email']) || !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
         $errors['email']="Votre e-mail n'est pas valide";
     }else{
@@ -27,12 +61,37 @@ if(!empty($_POST)){
     }
     if (empty($errors)){
         
-        $req = $pdo->prepare("INSERT INTO membres SET username = ?, email = ?, password = ?, confirmation_token = ? ");
+        $req = $pdo->prepare("INSERT INTO membres SET "
+                . "username = ?, "
+                . "firstname = ?, "
+                . "lastname = ?, "
+                . "address = ?, "
+                . "code = ?, "
+                . "localite = ?, "
+                . "birthday = ?, "
+                . "telephone = ?, "
+                . "classement = ?, "
+                . "affiliation = ?, "
+                . "email = ?, "
+                . "cotisation = ?, "
+                . "password = ? ");
         $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
-        $token = str_random(60);
-        $req->execute([$_POST['username'], $_POST['email'], $password, $token]);
+        $req->execute([
+            $_POST['username'], 
+            $_POST['firstname'], 
+            $_POST['lastname'], 
+            $_POST['address'], 
+            $_POST['code'], 
+            $_POST['localite'], 
+            $_POST['birthday'], 
+            $_POST['telephone'], 
+            $_POST['classement'], 
+            $_POST['affiliation'], 
+            $_POST['email'], 
+            $_POST['cotisation'], 
+            $password]);
         $user_id = $pdo->lastInsertId();
-        mail($_POST['email'], 'Confirmation de votre compte', "Afin de valider votre compte merci de cliquer sur ce lien\n\nhttp://localhost/coupe_davis_2016/confirm.php?id={$user_id}&token=$token");
+        //mail($_POST['email'], 'Confirmation de votre compte', "Afin de valider votre compte merci de cliquer sur ce lien\n\nhttp://localhost/coupe_davis_2016/confirm.php?id={$user_id}&token=$token");
         $_SESSION['flash']['green'] = "Un e-mail de confirmation avec les  vous a été envoyé";
         header('location: login.php');
         exit();
@@ -58,9 +117,18 @@ if(!empty($_POST)){
     <legend><h1>S'inscrire</h1></legend>
  
     <div class="row">
-        <div class="input-field col s12">
+        <div class="input-field col s6">
             <input name="username" id="username" placeholder="Identifiant" type="text" class="validate">
             <label for="username">Identifiant</label>
+        </div>
+        <div class="input-field col s6">
+            <select name="cotisation" id="cotisation">
+                <?php foreach($inscriptions as $cotisation): ?>
+                    <option value="<?= $cotisation->inscription; ?>"><?= $cotisation->inscription; ?></option>
+                <?php endforeach; ?>
+            </select>
+            <label>Cotisation</label>        
+
         </div>
     </div>
 
@@ -70,8 +138,15 @@ if(!empty($_POST)){
             <label for="firstname">Prénom</label>
         </div>
         <div class="input-field col s6">
-            <input placeholder="Nom" name="lastname" id="lastname" type="text">
+            <input placeholder="Nom/Nom de famille" name="lastname" id="lastname" type="text">
             <label for="lastname">Nom</label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="input-field col s12">
+            <input name="address" id="address" placeholder="Adresse" type="text" class="validate">
+            <label for="address">Adresse</label>
         </div>
     </div>
 
@@ -107,8 +182,12 @@ if(!empty($_POST)){
     
     <div class="row">
         <div class="input-field col s6">
-            <input placeholder="Classement" name="classement" id="classement" type="text">
-            <label for="classement">Classement</label>
+            <select name="classement" id="classement">
+                <?php foreach($classements as $class): ?>
+                    <option value="<?= $class->classement; ?>"><?= $class->classement; ?> </option>
+                <?php endforeach; ?>
+            </select>
+            <label>Classement</label>        
         </div>
         <div class="input-field col s6">
             <input placeholder="N° affiliation" name="affiliation" id="affiliation" type="text">
@@ -116,19 +195,17 @@ if(!empty($_POST)){
         </div>
     </div>
 
+    <div class="row">
+        <div class="input-field col s6">
+            <input placeholder="Mot de passe" name="password" id="password" type="password">
+            <label for="password">Mot de passe</label>
+        </div>
+        <div class="input-field col s6">
+            <input placeholder="Mot de passe (confirmation)" name="passwordconfirm" id="passwordconfirm" type="password">
+            <label for="passwordconfirm">Mot de passe (confirmation)</label>
+        </div>
+    </div>
     
-    <div class="form-group">
-      <label for="password" class="col-lg-2 control-label">Password</label>
-      <div class="col-lg-10">
-        <input class="form-control" name="password" id="password" placeholder="Password" type="password">
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="passwordconfirm" class="col-lg-2 control-label">Password confim</label>
-      <div class="col-lg-10">
-        <input class="form-control" name="passwordconfirm" id="passwordconfirm" placeholder="Password" type="password">
-      </div>
-    </div>
     <div class="form-group">
       <div class="col-lg-10 col-lg-offset-2">
         <button type="reset" class="btn btn-default">Annuler</button>

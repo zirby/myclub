@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
   <title>TC Standard - MyClub</title>
 
@@ -13,13 +13,13 @@
 <body>
     <div class="navbar-fixed">
   <nav class="teal lighten-1" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo center">TC Standard - Inscription</a>
+    <div class="nav-wrapper container"><a id="logo-container" href="index.php" class="brand-logo center">TC Standard - Inscription</a>
      <ul id="nav-mobile" class="left hide-on-med-and-down">
         <li><a href="#">admin</a></li>
       </ul>
       <ul class="right hide-on-med-and-down">
         <li><a href="#">S'inscrire</a></li>
-        <li><a href="#">se coonecter</a></li>
+        <li><a href="#">se connecter</a></li>
       </ul>
 
       <ul id="nav-mobile" class="side-nav">
