@@ -1,12 +1,12 @@
 <?php 
     require_once 'inc/conn.php';
-    $req = $pdo->prepare("SELECT  *, r.id as rid FROM cd16_reservations as r, cd16_users as u WHERE r.user_id= u.id ORDER BY r.id DESC  ");
+    $req = $pdo->prepare("SELECT  * FROM equipes ");
     $req->execute();
 ?>
 <?php require 'inc/header.php'; ?>
 <div class="row">
     <div class="col-md-6">
-        <h1>Réservations</h1>
+        <h1>Equipes Interclubs</h1>
     </div>
     <div class="col-md-6 text-right" style="margin-top: 21px;">
         <a href="inc/doSupprimer.php" class="btn btn-danger" title="supprimer"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span> Suppression automatique</a>
@@ -16,34 +16,20 @@
     <table class="table table-striped table-hover ">
         <thead>
             <th>N°</th>
-            <th>Nom</th>
-            <th>Prénom</th>
-            <th>Jour</th>
-            <th>Zone</th>
-            <th>Bloc</th>
-            <th>Nb.Places</th>
-            <th style="text-align: right;">Montant</th>
-            <th style="text-align: right;">Réservé le</th>
-            <th style="text-align: right;">Payé le</th>
-            <th style="text-align: right;">Envoyé le</th>
-            <th style="text-align: right;">Supprimé le</th>
+            <th>Equipe</th>
+            <th>Série</th>
+            <th>Capitaines</th>
+            <th>GSM</th>
             <th style="text-align: right;">Action</th>
         </thead>
         <tbody>
             <?php while($res = $req->fetch()): ?>
             <tr>
-                <td style="text-align: left;"><?= $res->rid; ?></td>
-                <td style="text-align: left;color:red;"><?= strtoupper($res->lastname); ?></td>
-                <td style="text-align: left;"><?= $res->firstname; ?></td>
-                <td style="text-align: left;color:green;"><?= $res->jour; ?></td>
-                <td style="text-align: left;"><?= $res->zone; ?></td>
-                <td style="text-align: left;"><?= $res->bloc; ?></td>
-                <td style="text-align: left;"><?= $res->nbplaces; ?></td>
-                <td style="text-align: right;"><?= $res->montant; ?> €</td>
-                <td style="text-align: right;"><?= $res->reserve_le; ?></td>
-                <td style="text-align: right;"><?= $res->paye_le; ?></td>
-                <td style="text-align: right;"><?= $res->envoye_le; ?></td>
-                <td style="text-align: right;"><?= $res->supprime_le; ?></td> 
+                <td style="text-align: left;"><?= $res->id; ?></td>
+                <td style="text-align: left;color:red;"><?= strtoupper($res->equipe); ?></td>
+                <td style="text-align: left;"><?= $res->série; ?></td>
+                <td style="text-align: left;color:green;"><?= $res->capitaine; ?></td>
+                <td style="text-align: left;"><?= $res->gsm; ?></td>
                 <td style="text-align: right;">
                     <a href="#" class="btn btn-default btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm" data-id="<?= $res->rid; ?>"><span class="glyphicon glyphicon-euro" aria-hidden="true"></span></a>
                     <a href="#" class="btn btn-success btn-xs" data-toggle="modal" data-target=".bs-envoye-modal-sm" data-id="<?= $res->rid; ?>"><span class="glyphicon glyphicon-send" aria-hidden="true"></span></a>

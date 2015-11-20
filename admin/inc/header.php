@@ -39,7 +39,7 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="index.php">Catégories Interclubs</a></li>
-            <li><a href="index.php">Equipes Interclubs</a></li>
+            <li><a href="equipes.php">Equipes Interclubs</a></li>
             <li><a href="index.php">Membres</a></li>
           </ul>
          </div>
