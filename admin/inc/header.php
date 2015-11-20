@@ -31,14 +31,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Tc Standard - Administration</a>
+          <a class="navbar-brand" href="index.php">Tc Standard - Administration</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
           <ul class="nav navbar-nav">
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="index.php">Catégories Interclubs</a></li>
+            <li><a href="equipes.php">Catégories Interclubs</a></li>
             <li><a href="equipes.php">Equipes Interclubs</a></li>
             <li><a href="index.php">Membres</a></li>
           </ul>

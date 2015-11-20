@@ -4,6 +4,6 @@
     <script src="js/bootstrap-datepicker.min.js"></script>
     <script src="js/bootstrap-multiselect.js"></script>
 
-    <script src="js/events.js"></script>
+    <script src="js/app.js"></script>
   </body>
 </html>
