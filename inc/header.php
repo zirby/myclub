@@ -15,7 +15,7 @@
   <nav class="teal lighten-1" role="navigation">
     <div class="nav-wrapper container"><a id="logo-container" href="index.php" class="brand-logo center">TC Standard - Inscription</a>
      <ul id="nav-mobile" class="left hide-on-med-and-down">
-        <li><a href="#">admin</a></li>
+        <li><a href="admin/index.php">admin</a></li>
       </ul>
       <ul class="right hide-on-med-and-down">
         <?php if(isset($_SESSION['auth'])):?>
